@@ -1,0 +1,262 @@
+node n1 {
+    type router
+    model router
+    network-config {
+	hostname n1
+	!
+	interface eth2
+	 ip address 192.0.4.1/24
+	 ipv6 address 2001:db8:2::1/64
+	!
+	interface eth1
+	 ip address 192.0.3.1/24
+	 ipv6 address 2001:db8:1::1/64
+	!
+	interface eth0
+	 ip address 192.0.2.1/24
+	 ipv6 address 2001:db8:0::1/64
+	!
+    }
+    canvas c1
+    iconcoords {486.0 276.0}
+    labelcoords {486.0 308.0}
+    interface-peer {eth0 n9}
+    interface-peer {eth1 n10}
+    interface-peer {eth2 n2}
+}
+
+node n3 {
+    type router
+    model PC
+    network-config {
+	hostname n3
+	!
+	interface eth0
+	 ip address 192.0.2.20/24
+	 ipv6 address 2001:db8:0::20/64
+	!
+    }
+    canvas c1
+    iconcoords {67.0 570.0}
+    labelcoords {67.0 602.0}
+    interface-peer {eth0 n9}
+}
+
+node n4 {
+    type router
+    model PC
+    network-config {
+	hostname n4
+	!
+	interface eth0
+	 ip address 192.0.2.21/24
+	 ipv6 address 2001:db8:0::21/64
+	!
+    }
+    canvas c1
+    iconcoords {247.0 571.0}
+    labelcoords {247.0 603.0}
+    interface-peer {eth0 n9}
+}
+
+node n5 {
+    type router
+    model PC
+    network-config {
+	hostname n5
+	!
+	interface eth0
+	 ip address 192.0.2.22/24
+	 ipv6 address 2001:db8:0::22/64
+	!
+    }
+    canvas c1
+    iconcoords {420.0 565.0}
+    labelcoords {420.0 597.0}
+    interface-peer {eth0 n9}
+}
+
+node n6 {
+    type router
+    model PC
+    network-config {
+	hostname n6
+	!
+	interface eth0
+	 ip address 192.0.3.22/24
+	 ipv6 address 2001:db8:1::22/64
+	!
+    }
+    canvas c1
+    iconcoords {558.0 569.0}
+    labelcoords {555.0 614.0}
+    interface-peer {eth0 n10}
+}
+
+node n7 {
+    type router
+    model PC
+    network-config {
+	hostname n7
+	!
+	interface eth0
+	 ip address 192.0.3.21/24
+	 ipv6 address 2001:db8:1::21/64
+	!
+    }
+    canvas c1
+    iconcoords {746.0 573.0}
+    labelcoords {746.0 605.0}
+    interface-peer {eth0 n10}
+}
+
+node n8 {
+    type router
+    model PC
+    network-config {
+	hostname n8
+	!
+	interface eth0
+	 ip address 192.0.3.20/24
+	 ipv6 address 2001:db8:1::20/64
+	!
+    }
+    canvas c1
+    iconcoords {922.0 565.0}
+    labelcoords {922.0 597.0}
+    interface-peer {eth0 n10}
+}
+
+node n9 {
+    type lanswitch
+    network-config {
+	hostname n9
+	!
+    }
+    canvas c1
+    iconcoords {246.0 279.0}
+    labelcoords {246.0 303.0}
+    interface-peer {e0 n3}
+    interface-peer {e1 n4}
+    interface-peer {e2 n5}
+    interface-peer {e3 n1}
+}
+
+node n10 {
+    type lanswitch
+    network-config {
+	hostname n10
+	!
+    }
+    canvas c1
+    iconcoords {747.0 277.0}
+    labelcoords {747.0 301.0}
+    interface-peer {e0 n8}
+    interface-peer {e1 n7}
+    interface-peer {e2 n6}
+    interface-peer {e3 n1}
+}
+
+node n2 {
+    type router
+    model host
+    network-config {
+	hostname n2
+	!
+	interface eth0
+	 ip address 192.0.4.10/24
+	 ipv6 address 2001:db8:2::10/64
+	!
+    }
+    canvas c1
+    iconcoords {485.0 40.0}
+    labelcoords {485.0 72.0}
+    interface-peer {eth0 n1}
+    custom-config {
+	custom-config-id service:UserDefined
+	custom-command UserDefined
+	config {
+	files=('labvic.html', )
+	cmdup=('python -m SimpleHTTPServer 80', 'python -m SimpleHTTPServer port 80', )
+	}
+    }
+    custom-config {
+	custom-config-id service:UserDefined:labvic.html
+	custom-command labvic.html
+	config {
+	<html>
+	  <title><title>
+	  <body>
+	    Hello Trabalho
+	  </body>
+	</html>
+	}
+    }
+    services {DefaultRoute SSH UserDefined}
+}
+
+link l1 {
+    nodes {n3 n9}
+    bandwidth 0
+}
+
+link l2 {
+    nodes {n4 n9}
+    bandwidth 0
+}
+
+link l3 {
+    nodes {n5 n9}
+    bandwidth 0
+}
+
+link l4 {
+    nodes {n8 n10}
+    bandwidth 0
+}
+
+link l5 {
+    nodes {n7 n10}
+    bandwidth 0
+}
+
+link l6 {
+    nodes {n6 n10}
+    bandwidth 0
+}
+
+link l7 {
+    nodes {n9 n1}
+    bandwidth 0
+}
+
+link l8 {
+    nodes {n10 n1}
+    bandwidth 0
+}
+
+link l9 {
+    nodes {n1 n2}
+    bandwidth 0
+}
+
+canvas c1 {
+    name {Canvas1}
+}
+
+option global {
+    interface_names no
+    ip_addresses yes
+    ipv6_addresses yes
+    node_labels yes
+    link_labels yes
+    show_api no
+    background_images no
+    annotations yes
+    grid yes
+    traffic_start 0
+}
+
+option session {
+}
+
